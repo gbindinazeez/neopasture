@@ -1,39 +1,205 @@
 ---
-const subject = encodeURIComponent('Join the NeoPasture waitlist');
-const body = encodeURIComponent(
-  "Hello NeoPasture,\n\nI'd like to join the waitlist. Please add this email address.\n",
-);
-const mailtoHref = `mailto:info@neopasture.com?subject=${subject}&body=${body}`;
+interface Props {
+  idPrefix: string;
+}
+const { idPrefix } = Astro.props;
+const emailId = `${idPrefix}-email`;
+const phoneId = `${idPrefix}-phone`;
+const typeId = `${idPrefix}-type`;
+
+const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
 ---
 
-<div class="waitlist-cta">
-  <a class="waitlist-cta__button" href={mailtoHref}>Join the waitlist</a>
-  <p class="waitlist-cta__note">
-    Opens your email app with a message to info@neopasture.com. We only use your email to tell you
-    about the launch.
-  </p>
-</div>
+<form class="waitlist-form" data-waitlist-form novalidate>
+  <div class="waitlist-form__fields">
+    <label class="visually-hidden" for={emailId}>Email address</label>
+    <input
+      id={emailId}
+      type="email"
+      name="email"
+      placeholder="you@example.com"
+      autocomplete="email"
+      required
+    />
+
+    <label class="visually-hidden" for={phoneId}>Phone number</label>
+    <input
+      id={phoneId}
+      type="tel"
+      name="phone"
+      placeholder="Phone number"
+      autocomplete="tel"
+      required
+    />
+
+    <label class="visually-hidden" for={typeId}>Type of customer</label>
+    <select id={typeId} name="customerType" required>
+      <option value="" selected disabled>I'm joining as a...</option>
+      {customerTypes.map((type) => <option value={type}>{type}</option>)}
+    </select>
+
+    <button type="submit">Join the waitlist</button>
+  </div>
+
+  <div class="waitlist-form__honeypot" aria-hidden="true">
+    <label for={`${idPrefix}-company`}>Company</label>
+    <input id={`${idPrefix}-company`} type="text" name="company" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <p class="waitlist-form__status" role="status" aria-live="polite"></p>
+</form>
 
 <style>
-  .waitlist-cta__button {
-    display: inline-block;
-    padding: var(--space-3) var(--space-6);
+  .waitlist-form__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .waitlist-form__fields input,
+  .waitlist-form__fields select {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink);
+    background: var(--color-canvas);
+  }
+
+  .waitlist-form__fields input::placeholder {
+    color: var(--color-ink-muted);
+  }
+
+  .waitlist-form__fields select:invalid {
+    color: var(--color-ink-muted);
+  }
+
+  .waitlist-form__fields button {
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-primary);
     border-radius: var(--radius-sm);
     background: var(--color-primary);
     color: var(--color-canvas);
     font-weight: 600;
-    text-decoration: none;
+    cursor: pointer;
     transition: background var(--motion-fast) var(--ease-standard);
   }
 
-  .waitlist-cta__button:hover {
+  .waitlist-form__fields button:hover {
     background: var(--color-ink);
-    color: var(--color-canvas);
+    border-color: var(--color-ink);
   }
 
-  .waitlist-cta__note {
+  .waitlist-form__fields button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .waitlist-form__honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .waitlist-form__status {
     margin-top: var(--space-3);
     font-size: var(--font-small);
-    color: var(--color-ink-muted);
+    min-height: 1.25em;
+  }
+
+  .waitlist-form__status[data-state='error'] {
+    color: var(--color-error);
+  }
+
+  .waitlist-form__status[data-state='success'] {
+    color: var(--color-primary);
   }
 </style>
+
+<script>
+  const WAITLIST_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbyHID2K78tNco0wmExWO-QOQddR8_JNSKGCO8SV5nYYHGCSg50ZD2mn7mx0wAa22ZqnrA/exec';
+
+  function attach(form: HTMLFormElement) {
+    const email = form.querySelector<HTMLInputElement>('input[type="email"]');
+    const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
+    const customerType = form.querySelector<HTMLSelectElement>('select[name="customerType"]');
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="company"]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const status = form.querySelector<HTMLParagraphElement>('.waitlist-form__status');
+    if (!email || !phone || !customerType || !button || !status) return;
+
+    const idleLabel = button.textContent ?? 'Join the waitlist';
+
+    function setStatus(message: string, state: 'error' | 'success' | '') {
+      status!.textContent = message;
+      if (state) {
+        status!.dataset.state = state;
+      } else {
+        delete status!.dataset.state;
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (button!.disabled) return;
+
+      if (!email!.checkValidity()) {
+        setStatus('Enter a valid email address.', 'error');
+        email!.focus();
+        return;
+      }
+      if (!phone!.checkValidity() || phone!.value.trim().length < 7) {
+        setStatus('Enter a valid phone number.', 'error');
+        phone!.focus();
+        return;
+      }
+      if (!customerType!.value) {
+        setStatus('Choose how you want to join.', 'error');
+        customerType!.focus();
+        return;
+      }
+
+      const hadFocus = document.activeElement === button;
+      button!.disabled = true;
+      button!.textContent = 'Joining...';
+      setStatus('', '');
+
+      try {
+        const response = await fetch(WAITLIST_ENDPOINT, {
+          method: 'POST',
+          body: new URLSearchParams({
+            email: email!.value,
+            phone: phone!.value,
+            customerType: customerType!.value,
+            company: honeypot?.value ?? '',
+          }),
+        });
+
+        let data: { ok: boolean; error?: string };
+        try {
+          data = await response.json();
+        } catch {
+          setStatus('Something went wrong. Try again.', 'error');
+          return;
+        }
+
+        if (response.ok && data.ok) {
+          setStatus("You're on the list. Check your inbox for a confirmation.", 'success');
+          form.reset();
+        } else {
+          setStatus(data.error ?? 'Something went wrong. Try again.', 'error');
+        }
+      } catch {
+        setStatus('Network error. Try again.', 'error');
+      } finally {
+        button!.disabled = false;
+        button!.textContent = idleLabel;
+        if (hadFocus) button!.focus();
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-waitlist-form]').forEach(attach);
+</script>
