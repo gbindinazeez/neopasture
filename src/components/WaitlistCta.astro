@@ -44,9 +44,16 @@ const waitlistEndpoint =
     <button type="submit">Join the waitlist</button>
   </div>
 
+  <!-- Honeypot: the field name and autocomplete value must stay meaningless, or Chrome autofill fills it and the submission is silently treated as a bot. -->
   <div class="waitlist-form__honeypot" aria-hidden="true">
-    <label for={`${idPrefix}-company`}>Company</label>
-    <input id={`${idPrefix}-company`} type="text" name="company" tabindex="-1" autocomplete="off" />
+    <label for={`${idPrefix}-npcheck`}>Leave this field empty</label>
+    <input
+      id={`${idPrefix}-npcheck`}
+      type="text"
+      name="np-check"
+      tabindex="-1"
+      autocomplete="np-unrecognized"
+    />
   </div>
 
   <p class="waitlist-form__status" role="status" aria-live="polite"></p>
@@ -125,7 +132,7 @@ const waitlistEndpoint =
     const email = form.querySelector<HTMLInputElement>('input[type="email"]');
     const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
     const customerType = form.querySelector<HTMLSelectElement>('select[name="customerType"]');
-    const honeypot = form.querySelector<HTMLInputElement>('input[name="company"]');
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="np-check"]');
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const status = form.querySelector<HTMLParagraphElement>('.waitlist-form__status');
     if (!email || !phone || !customerType || !button || !status) return;
@@ -177,7 +184,7 @@ const waitlistEndpoint =
             email: email!.value,
             phone: phone!.value,
             customerType: customerType!.value,
-            company: honeypot?.value ?? '',
+            'np-check': honeypot?.value ?? '',
           }),
         });
         setStatus("You're on the list. Check your inbox for a confirmation.", 'success');
