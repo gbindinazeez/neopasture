@@ -8,9 +8,12 @@ const phoneId = `${idPrefix}-phone`;
 const typeId = `${idPrefix}-type`;
 
 const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
+
+const waitlistEndpoint =
+  'https://script.google.com/macros/s/AKfycbyHID2K78tNco0wmExWO-QOQddR8_JNSKGCO8SV5nYYHGCSg50ZD2mn7mx0wAa22ZqnrA/exec';
 ---
 
-<form class="waitlist-form" data-waitlist-form novalidate>
+<form class="waitlist-form" data-waitlist-form action={waitlistEndpoint} method="post" novalidate>
   <div class="waitlist-form__fields">
     <label class="visually-hidden" for={emailId}>Email address</label>
     <input
@@ -118,9 +121,6 @@ const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
 </style>
 
 <script>
-  const WAITLIST_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbyHID2K78tNco0wmExWO-QOQddR8_JNSKGCO8SV5nYYHGCSg50ZD2mn7mx0wAa22ZqnrA/exec';
-
   function attach(form: HTMLFormElement) {
     const email = form.querySelector<HTMLInputElement>('input[type="email"]');
     const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
@@ -170,7 +170,7 @@ const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
         // Apps Script web apps cannot answer CORS preflight or expose response
         // headers, so the reply is unreadable cross-origin. Send fire-and-forget;
         // validation already ran client-side and again inside the script.
-        await fetch(WAITLIST_ENDPOINT, {
+        await fetch(form.action, {
           method: 'POST',
           mode: 'no-cors',
           body: new URLSearchParams({
