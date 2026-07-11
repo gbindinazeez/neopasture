@@ -1,0 +1,56 @@
+---
+import Logo from './Logo.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__top">
+    <Logo />
+    <nav class="footer__links" aria-label="Footer">
+      <a href="mailto:info@neopasture.com">info@neopasture.com</a>
+      <a href="tel:+2348179082163">+234 817 908 2163</a>
+      <a href={`${base}/privacy`}>Privacy</a>
+    </nav>
+  </div>
+  <p class="footer__copyright">© {year} NeoPasture. All rights reserved.</p>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--space-6) var(--page-margin) var(--space-7);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    font-size: var(--font-small);
+  }
+
+  .footer__links a {
+    text-decoration: none;
+  }
+
+  .footer__links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer__copyright {
+    margin-top: var(--space-5);
+    font-size: var(--font-label);
+    color: var(--color-ink-muted);
+  }
+</style>

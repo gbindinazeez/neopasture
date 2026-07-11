@@ -1,0 +1,39 @@
+---
+import WaitlistCta from './WaitlistCta.astro';
+---
+
+<section class="hero">
+  <h1>Your digital lasso for livestock care.</h1>
+  <p class="hero__description">
+    NeoPasture is in development for individuals and small farmers who want livestock without the
+    time, grazing land, or know-how it usually takes.
+  </p>
+  <div class="hero__form">
+    <WaitlistCta />
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-8) var(--page-margin) var(--space-7);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .hero h1 {
+    font-size: var(--font-display);
+    max-width: 20ch;
+  }
+
+  .hero__description {
+    margin-top: var(--space-5);
+    font-size: var(--font-h3);
+    color: var(--color-ink-muted);
+  }
+
+  .hero__form {
+    margin-top: var(--space-6);
+    max-width: 32rem;
+  }
+</style>

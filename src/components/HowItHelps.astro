@@ -1,0 +1,74 @@
+<section class="how-it-helps">
+  <h2>What NeoPasture is being built to do</h2>
+  <ol>
+    <li>
+      <span class="how-it-helps__index">01</span>
+      <div>
+        <h3>Care</h3>
+        <p>Day-to-day care for your livestock.</p>
+      </div>
+    </li>
+    <li>
+      <span class="how-it-helps__index">02</span>
+      <div>
+        <h3>Feeding</h3>
+        <p>Feeding schedules and supply.</p>
+      </div>
+    </li>
+    <li>
+      <span class="how-it-helps__index">03</span>
+      <div>
+        <h3>Security</h3>
+        <p>Security, so your livestock is never left unattended.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<style>
+  .how-it-helps {
+    padding: var(--space-7) var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .how-it-helps h2 {
+    font-size: var(--font-h2);
+  }
+
+  .how-it-helps ol {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .how-it-helps li {
+    display: flex;
+    gap: var(--space-5);
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .how-it-helps li:first-child {
+    border-top: none;
+  }
+
+  .how-it-helps__index {
+    font-size: var(--font-small);
+    color: var(--color-primary);
+    font-weight: 700;
+    flex: 0 0 2.5rem;
+  }
+
+  .how-it-helps h3 {
+    font-size: var(--font-h3);
+  }
+
+  .how-it-helps p {
+    margin-top: var(--space-2);
+    color: var(--color-ink-muted);
+  }
+</style>

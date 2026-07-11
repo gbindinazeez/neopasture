@@ -1,0 +1,39 @@
+---
+const subject = encodeURIComponent('Join the NeoPasture waitlist');
+const body = encodeURIComponent(
+  "Hello NeoPasture,\n\nI'd like to join the waitlist. Please add this email address.\n",
+);
+const mailtoHref = `mailto:info@neopasture.com?subject=${subject}&body=${body}`;
+---
+
+<div class="waitlist-cta">
+  <a class="waitlist-cta__button" href={mailtoHref}>Join the waitlist</a>
+  <p class="waitlist-cta__note">
+    Opens your email app with a message to info@neopasture.com. We only use your email to tell you
+    about the launch.
+  </p>
+</div>
+
+<style>
+  .waitlist-cta__button {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: var(--color-canvas);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--motion-fast) var(--ease-standard);
+  }
+
+  .waitlist-cta__button:hover {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+
+  .waitlist-cta__note {
+    margin-top: var(--space-3);
+    font-size: var(--font-small);
+    color: var(--color-ink-muted);
+  }
+</style>

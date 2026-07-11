@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Privacy: NeoPasture"
+  description="How NeoPasture handles the email address you provide when you join the waitlist."
+>
+  <Header />
+  <main id="main">
+    <section class="privacy">
+      <h1>Privacy</h1>
+      <p>NeoPasture collects only the email address you provide when you join the waitlist.</p>
+      <p>
+        We use it to let you know when NeoPasture launches and to share occasional updates about
+        that launch. We do not sell or share your email with third parties.
+      </p>
+      <p>
+        NeoPasture is not yet connected to a third-party email service. Once it is, this page will
+        be updated to name that provider.
+      </p>
+      <p>
+        If you have questions about your data, or want it removed, contact us at
+        <a href="mailto:info@neopasture.com">info@neopasture.com</a>.
+      </p>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .privacy {
+    padding: var(--space-8) var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .privacy h1 {
+    font-size: var(--font-h1);
+  }
+
+  .privacy p {
+    margin-top: var(--space-5);
+    max-width: var(--measure);
+  }
+</style>

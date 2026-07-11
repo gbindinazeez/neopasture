@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import HowItHelps from '../components/HowItHelps.astro';
+import WhoItsFor from '../components/WhoItsFor.astro';
+import WaitlistSection from '../components/WaitlistSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="NeoPasture"
+  description="NeoPasture is in development for individuals and small farmers who want livestock without the time, grazing land, or know-how it usually takes. Join the waitlist."
+>
+  <Header />
+  <main id="main">
+    <Hero />
+    <ProblemSection />
+    <HowItHelps />
+    <WhoItsFor />
+    <WaitlistSection />
+  </main>
+  <Footer />
+</Layout>

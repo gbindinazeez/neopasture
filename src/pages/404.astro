@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Page not found: NeoPasture" description="This page doesn't exist.">
+  <Header />
+  <main id="main">
+    <section class="not-found">
+      <h1>Page not found</h1>
+      <p>The page you're looking for doesn't exist.</p>
+      <a href={`${base}/`}>Back home</a>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .not-found {
+    padding: var(--space-9) var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .not-found h1 {
+    font-size: var(--font-h1);
+  }
+
+  .not-found p {
+    margin: var(--space-4) auto 0;
+    color: var(--color-ink-muted);
+  }
+
+  .not-found a {
+    display: inline-block;
+    margin-top: var(--space-6);
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Logo from './Logo.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<header class="header">
+  <Logo />
+  <a class="header__cta" href={`${base}/#waitlist`}>Join the waitlist</a>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .header__cta {
+    font-size: var(--font-small);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: var(--space-1);
+  }
+
+  .header__cta:hover {
+    border-bottom-color: var(--color-primary);
+  }
+</style>

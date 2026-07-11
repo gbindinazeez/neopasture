@@ -1,0 +1,29 @@
+---
+import Mark from './Mark.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<a href={`${base}/`} class="logo" aria-label="NeoPasture home">
+  <Mark />
+  <span class="logo__word">NeoPasture</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .logo:hover {
+    color: var(--color-ink);
+  }
+
+  .logo__word {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+</style>

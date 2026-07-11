@@ -1,0 +1,72 @@
+---
+import WaitlistCta from './WaitlistCta.astro';
+---
+
+<section class="waitlist" id="waitlist">
+  <svg class="waitlist__pattern" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="wave-pattern" width="60" height="30" patternUnits="userSpaceOnUse">
+        <path
+          class="waitlist__pattern-path"
+          d="M0 20 C 10 10, 20 10, 30 18 C 40 26, 50 26, 60 16"
+          stroke-width="4"
+          fill="none"
+        />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#wave-pattern)" />
+  </svg>
+
+  <div class="waitlist__content">
+    <h2>Join the waitlist</h2>
+    <p>
+      We're building NeoPasture now. Send us your email and we'll let you know as soon as there's a
+      place for you.
+    </p>
+    <div class="waitlist__form">
+      <WaitlistCta />
+    </div>
+  </div>
+</section>
+
+<style>
+  .waitlist {
+    position: relative;
+    padding: var(--space-8) var(--page-margin);
+    overflow: hidden;
+  }
+
+  .waitlist__pattern {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.06;
+  }
+
+  .waitlist__pattern-path {
+    stroke: var(--color-primary);
+  }
+
+  .waitlist__content {
+    position: relative;
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .waitlist h2 {
+    font-size: var(--font-h1);
+  }
+
+  .waitlist p {
+    margin-top: var(--space-4);
+    font-size: var(--font-h3);
+    color: var(--color-ink-muted);
+    max-width: var(--measure);
+  }
+
+  .waitlist__form {
+    margin-top: var(--space-6);
+    max-width: 32rem;
+  }
+</style>
