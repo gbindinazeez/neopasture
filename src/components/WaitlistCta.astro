@@ -167,8 +167,12 @@ const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
       setStatus('', '');
 
       try {
-        const response = await fetch(WAITLIST_ENDPOINT, {
+        // Apps Script web apps cannot answer CORS preflight or expose response
+        // headers, so the reply is unreadable cross-origin. Send fire-and-forget;
+        // validation already ran client-side and again inside the script.
+        await fetch(WAITLIST_ENDPOINT, {
           method: 'POST',
+          mode: 'no-cors',
           body: new URLSearchParams({
             email: email!.value,
             phone: phone!.value,
@@ -176,23 +180,10 @@ const customerTypes = ['Livestock Owner', 'Farm Partner', 'Enterprise Partner'];
             company: honeypot?.value ?? '',
           }),
         });
-
-        let data: { ok: boolean; error?: string };
-        try {
-          data = await response.json();
-        } catch {
-          setStatus('Something went wrong. Try again.', 'error');
-          return;
-        }
-
-        if (response.ok && data.ok) {
-          setStatus("You're on the list. Check your inbox for a confirmation.", 'success');
-          form.reset();
-        } else {
-          setStatus(data.error ?? 'Something went wrong. Try again.', 'error');
-        }
+        setStatus("You're on the list. Check your inbox for a confirmation.", 'success');
+        form.reset();
       } catch {
-        setStatus('Network error. Try again.', 'error');
+        setStatus('Something went wrong. Try again, or email info@neopasture.com.', 'error');
       } finally {
         button!.disabled = false;
         button!.textContent = idleLabel;

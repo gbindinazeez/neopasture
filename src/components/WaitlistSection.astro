@@ -1,5 +1,5 @@
 ---
-import WaitlistCta from './WaitlistCta.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="waitlist" id="waitlist">
@@ -20,12 +20,10 @@ import WaitlistCta from './WaitlistCta.astro';
   <div class="waitlist__content">
     <h2>Join the waitlist</h2>
     <p>
-      We're building NeoPasture now. Leave your email and we'll let you know as soon as there's a
-      place for you.
+      We're building NeoPasture now. Leave your details and we'll let you know as soon as there's
+      a place for you.
     </p>
-    <div class="waitlist__form">
-      <WaitlistCta idPrefix="main" />
-    </div>
+    <a class="waitlist__cta" href={`${base}/join`}>Join the waitlist</a>
   </div>
 </section>
 
@@ -65,8 +63,20 @@ import WaitlistCta from './WaitlistCta.astro';
     max-width: var(--measure);
   }
 
-  .waitlist__form {
+  .waitlist__cta {
+    display: inline-block;
     margin-top: var(--space-6);
-    max-width: 32rem;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: var(--color-canvas);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--motion-fast) var(--ease-standard);
+  }
+
+  .waitlist__cta:hover {
+    background: var(--color-ink);
+    color: var(--color-canvas);
   }
 </style>

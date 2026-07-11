@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WaitlistCta from '../components/WaitlistCta.astro';
+---
+
+<Layout
+  title="Join the waitlist: NeoPasture"
+  description="Join the NeoPasture waitlist. Tell us how to reach you and how you want to use NeoPasture."
+>
+  <Header />
+  <main id="main">
+    <section class="join">
+      <h1>Join the waitlist</h1>
+      <p>
+        Tell us how to reach you and how you want to use NeoPasture. We'll let you know as soon as
+        there's a place for you.
+      </p>
+      <div class="join__form">
+        <WaitlistCta idPrefix="join" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .join {
+    padding: var(--space-8) var(--page-margin) var(--space-9);
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .join h1 {
+    font-size: var(--font-h1);
+  }
+
+  .join p {
+    margin-top: var(--space-4);
+    color: var(--color-ink-muted);
+  }
+
+  .join__form {
+    margin-top: var(--space-6);
+    max-width: 28rem;
+  }
+</style>
