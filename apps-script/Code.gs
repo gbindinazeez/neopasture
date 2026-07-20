@@ -67,8 +67,7 @@ function doPost(e) {
     const key = cooldownKey(email);
     if (cache.get(key)) {
       console.log('Confirmation suppressed, still in cooldown: ' + email);
-    } else {
-      sendConfirmation(email, customerType);
+    } else if (sendConfirmation(email, customerType)) {
       cache.put(key, '1', RESEND_COOLDOWN_SECONDS);
     }
 
@@ -101,6 +100,7 @@ function respond(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+/** Returns true only if Gmail accepted the message. */
 function sendConfirmation(email, customerType) {
   try {
     const plain =
@@ -120,8 +120,10 @@ function sendConfirmation(email, customerType) {
       replyTo: 'hello@neopasture.com',
       htmlBody: buildConfirmationHtml(customerType),
     });
+    return true;
   } catch (err) {
     console.error('Confirmation email failed: ' + (err && err.stack ? err.stack : err));
+    return false;
   }
 }
 
