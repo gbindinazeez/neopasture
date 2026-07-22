@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const steps = [
+  {
+    title: 'Choose your animal',
+    body: 'Pick a specific animal that is yours, identified by its own tag. It stays your animal, not a share of a herd.',
+  },
+  {
+    title: 'We care for it',
+    body: 'Our farm partners house, feed, and monitor your animal under our documented care protocols.',
+  },
+  {
+    title: 'Follow it anytime',
+    body: "Scan its tag or open your dashboard to see your animal's health records, weight, photos, and parentage.",
+  },
+  {
+    title: 'Decide at maturity',
+    body: 'When your animal is fully grown, you choose what happens next, from continuing its care to collecting it.',
+  },
+];
+---
+
+<Layout
+  title="How NeoPasture works"
+  description="How NeoPasture works: you own a specific animal, we raise and care for it, and you follow it from your phone. A livestock care and custody service."
+>
+  <Header />
+  <main id="main">
+    <section class="intro">
+      <h1>How NeoPasture works</h1>
+      <p>
+        You own a real animal. We raise and care for it, and you follow it every step from your
+        phone.
+      </p>
+    </section>
+
+    <section class="steps">
+      <ol>
+        {
+          steps.map((step, i) => (
+            <li>
+              <span class="steps__index" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h2>{step.title}</h2>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2>How tracking works</h2>
+      <p>
+        Every animal carries a tag with its own ID. Scan it and you see that exact animal's record:
+        health checks, weight, vaccinations, and parentage. The same record updates on your
+        dashboard, so you always know which animal is yours and how it is doing.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>Following your animal</h2>
+      <p>
+        From your dashboard you see your animal's health status, weight over time, photos from the
+        farm, and its records, wherever you are.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>Care built on good records</h2>
+      <p>
+        Regular health and vaccination checks are logged against your animal's record. We keep
+        parentage records for every animal and use them when planning breeding, to reduce avoidable
+        inbreeding and support the health of the herd.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>An honest word on loss</h2>
+      <p>
+        Animals are living creatures. Illness, accident, and natural causes can lead to loss, and we
+        cannot guarantee an animal's survival. If your animal is lost, we tell you promptly and
+        explain what happened.
+      </p>
+    </section>
+
+    <section class="cta">
+      <h2>Join the waitlist</h2>
+      <p>We are building NeoPasture now. Join the waitlist to be among the first to take part.</p>
+      <a class="cta__button" href={`${base}/join`}>Join the waitlist</a>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .intro,
+  .steps,
+  .block,
+  .cta {
+    padding: var(--space-7) var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .intro {
+    padding-top: var(--space-8);
+  }
+
+  .intro h1 {
+    font-size: var(--font-h1);
+  }
+
+  .intro p {
+    margin-top: var(--space-4);
+    max-width: var(--measure);
+    font-size: var(--font-body);
+  }
+
+  .steps ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .steps li {
+    display: flex;
+    gap: var(--space-5);
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .steps li:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .steps__index {
+    font-size: var(--font-small);
+    color: var(--color-primary);
+    font-weight: 700;
+    flex: 0 0 2.5rem;
+  }
+
+  .steps h2,
+  .block h2,
+  .cta h2 {
+    font-size: var(--font-h3);
+  }
+
+  .steps p,
+  .block p {
+    margin-top: var(--space-2);
+    color: var(--color-ink-muted);
+    max-width: var(--measure);
+  }
+
+  .cta {
+    border-bottom: none;
+  }
+
+  .cta p {
+    margin-top: var(--space-3);
+    max-width: var(--measure);
+    color: var(--color-ink-muted);
+  }
+
+  .cta__button {
+    display: inline-block;
+    margin-top: var(--space-5);
+    font-size: var(--font-small);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: var(--space-1);
+  }
+
+  .cta__button:hover {
+    border-bottom-color: var(--color-primary);
+  }
+</style>

@@ -6,7 +6,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <header class="header">
   <Logo />
-  <a class="header__cta" href={`${base}/join`}>Join the waitlist</a>
+  <nav class="header__nav" aria-label="Primary">
+    <a class="header__link" href={`${base}/how-it-works`}>How it works</a>
+    <a class="header__cta" href={`${base}/join`}>Join the waitlist</a>
+  </nav>
 </header>
 
 <style>
@@ -21,14 +24,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin: 0 auto;
   }
 
+  .header__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .header__link,
   .header__cta {
     font-size: var(--font-small);
     font-weight: 600;
     text-decoration: none;
-    border-bottom: 1px solid var(--color-rule);
+    border-bottom: 1px solid transparent;
     padding-bottom: var(--space-1);
   }
 
+  .header__cta {
+    border-bottom-color: var(--color-rule);
+  }
+
+  .header__link:hover,
   .header__cta:hover {
     border-bottom-color: var(--color-primary);
   }
